@@ -1,0 +1,17 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: event-app-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eventapp
+      MYSQL_USER: eventapp
+      MYSQL_PASSWORD: eventapp
+    ports:
+      - "3306:3306"
+    volumes:
+      - event-app-mysql-data:/var/lib/mysql
+
+volumes:
+  event-app-mysql-data:
