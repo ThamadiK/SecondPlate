@@ -1,7 +1,7 @@
-package com.example.eventapp.controller;
+package com.secondplate.app.controller;
 
-import com.example.eventapp.model.Event;
-import com.example.eventapp.service.EventService;
+import com.secondplate.app.model.Event;
+import com.secondplate.app.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

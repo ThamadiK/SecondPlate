@@ -5,9 +5,9 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: eventapp
-      MYSQL_USER: eventapp
-      MYSQL_PASSWORD: eventapp
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
     ports:
       - "3306:3306"
     volumes:

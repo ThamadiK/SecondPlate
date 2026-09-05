@@ -1,4 +1,4 @@
-package com.example.eventapp.model;
+package com.secondplate.app.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

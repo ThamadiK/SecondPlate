@@ -1,7 +1,7 @@
-package com.example.eventapp.service;
+package com.secondplate.app.service;
 
-import com.example.eventapp.model.Event;
-import com.example.eventapp.repository.EventRepository;
+import com.secondplate.app.model.Event;
+import com.secondplate.app.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
