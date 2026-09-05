@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "events")
 @Getter
@@ -16,7 +18,7 @@ public class Event {
 
     private Long organizerId;   
     private String location;
-    private LocalDateTime evenTime;
+    private LocalDateTime eventTime;
     private Integer capacity;
     private String description;
 }
