@@ -4,18 +4,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Entity
 @Table(name = "bookings")
 @Getter
 @Setter
 public class Booking {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Marks the primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // The primary key will be generated automatically, 
     private Long bookingId;
     private Long userId;    // FK -> User.userId (plain field for now, no relationship)
-    private LocalDate bookingDate;
     private Long eventId;   // FK -> Event.eventId (plain field for now, no relationship)
 }

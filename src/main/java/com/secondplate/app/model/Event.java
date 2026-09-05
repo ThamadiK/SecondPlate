@@ -16,8 +16,7 @@ public class Event {
 
     private Long organizerId;   
     private String location;
-    private String time;
+    private LocalDateTime evenTime;
     private Integer capacity;
     private String description;
-    private String attendees;
 }
