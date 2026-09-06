@@ -1,18 +1,24 @@
 package com.secondplate.app.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "bookings")
-@Getter
-@Setter
 public class Booking {
 
     @Id // Marks the primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // The primary key will be generated automatically, 
     private Long bookingId;
-    private Long userId;    // FK -> User.userId (plain field for now, no relationship)
-    private Long eventId;   // FK -> Event.eventId (plain field for now, no relationship)
+    private Long userId;    
+    private Long eventId;   
+
+    public Long getBookingId() { return bookingId; }
+    public void setBookingID(Long bookingId) { this.bookingId = bookingId; }
+
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
+
+    public Long getEventId() { return eventId; }
+    public void setEventId(Long eventId) { this.eventId = eventId; }
+
 }

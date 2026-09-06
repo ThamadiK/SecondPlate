@@ -105,7 +105,7 @@ public class PageController {
         event.setTitle(title);
         LocalDate eventDate = recurring ? startDate : date;
         LocalTime eventTime = time == null ? LocalTime.MIDNIGHT : time;
-        event.setEventTime(LocalDateTime.of(eventDate, eventTime));
+        event.setEventTime(eventTime);
         event.setLocation(location);
         event.setCapacity(capacity);
         event.setRecurring(recurring);
