@@ -3,14 +3,17 @@ package com.secondplate.app.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import com.secondplate.app.model.Booking;
 import com.secondplate.app.model.Event;
 import com.secondplate.app.model.User;
+import com.secondplate.app.service.BookingService;
 import com.secondplate.app.service.EventService;
 import com.secondplate.app.service.UserService;
 
@@ -19,10 +22,12 @@ public class PageController {
 
     private final EventService eventService;
     private final UserService userService;
+    private final BookingService bookingService;
 
-    public PageController(EventService eventService, UserService userService) {
+    public PageController(EventService eventService, UserService userService, BookingService bookingService) {
         this.eventService = eventService;
         this.userService = userService;
+        this.bookingService = bookingService;
     }
 
     @GetMapping("/login")
@@ -107,7 +112,36 @@ public class PageController {
         event.setFrequency(recurring ? frequency : null);
         event.setTicketPrice(ticketPrice);
         event.setDescription(description);
-        eventService.createEvent(event);
-        return "redirect:/host-event?created";
+        Event created = eventService.createEvent(event);
+        return "redirect:/host-event/" + created.getEventId() + "/confirm";
+    }
+
+    @GetMapping("/host-event/{id}/confirm")
+    public String hostEventConfirm(@PathVariable Long id, Model model) {
+        model.addAttribute("event", eventService.getEventById(id));
+        return "create-confirm";
+    }
+
+    @GetMapping("/events/{id}")
+    public String eventDetail(@PathVariable Long id, Model model) {
+        model.addAttribute("event", eventService.getEventById(id));
+        return "event-detail";
+    }
+
+    @PostMapping("/events/{id}/book")
+    public String bookEvent(@PathVariable Long id) {
+        // userId is left unset: there's no logged-in session yet (see the /login
+        // placeholder above), so there's no real user to attach this booking to.
+        Booking booking = new Booking();
+        booking.setEventId(id);
+        booking = bookingService.createBooking(booking);
+        return "redirect:/bookings/" + booking.getBookingId() + "/confirm";
+    }
+
+    @GetMapping("/bookings/{id}/confirm")
+    public String bookingConfirm(@PathVariable Long id, Model model) {
+        Booking booking = bookingService.getBookingById(id);
+        model.addAttribute("event", eventService.getEventById(booking.getEventId()));
+        return "booking-confirm";
     }
 }
