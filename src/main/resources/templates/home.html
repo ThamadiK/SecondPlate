@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Second Plate - Get-togethers Near You</title>
+    <style>
+        body { font-family: sans-serif; margin: 0; background: #f5e9dc; }
+
+        .navbar { display: flex; align-items: center; justify-content: space-between;
+                  padding: 16px 40px; }
+        .navbar .logo { font-size: 24px; font-weight: bold; color: #c9772e; }
+        .navbar .logo span { color: #a3512e; }
+        .navbar .links { display: flex; gap: 30px; align-items: center; }
+        .navbar .search { border-radius: 20px; border: none; padding: 10px 20px; width: 250px; }
+
+        h1 { padding: 10px 40px 0; }
+
+        .filters { padding: 10px 40px; }
+        .filters form { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .filters input, .filters select { padding: 8px 16px; border-radius: 20px; border: 1px solid #ddd;
+                                            background: #fdf6ee; }
+        .filters button { padding: 8px 18px; border-radius: 20px; border: none; background: #fff; cursor: pointer; }
+        .chip { display: inline-block; padding: 4px 12px; border-radius: 20px; border: 1px solid #d9a441;
+                margin-right: 8px; background: #fdf6ee; }
+
+        .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 20px 40px 40px; }
+        .card { height: 160px; border-radius: 12px; background-size: cover; background-position: center;
+                background-color: #d9a441; display: flex; align-items: flex-end; padding: 12px; color: white; }
+    </style>
+</head>
+<body>
+
+<!-- Nav bar: static markup only - "Search" box has no wired-up functionality yet -->
+<div class="navbar">
+    <div class="logo">Second<span>Plate</span></div>
+    <div class="links">
+        <a href="#">Host an Event</a>
+        <a href="#">My Bookings</a>
+        <a href="#">Friends</a>
+        <input class="search" type="text" placeholder="Search" disabled>
+        <span>📍 Melbourne</span>
+        <span>👤</span>
+    </div>
+</div>
+
+<h1>Get-togethers Near You</h1>
+
+<!-- Filter bar: a plain GET form. Submitting it re-requests /home with query params,
+     which HomePageController reads via @RequestParam. No JavaScript needed. -->
+<div class="filters">
+    <form method="get" th:action="@{/home}">
+        <input type="text" name="cuisine" placeholder="Cuisine" th:value="${appliedCuisine}">
+        <input type="text" name="dietary" placeholder="Dietary Needs" th:value="${appliedDietary}">
+        <input type="text" name="timeOfDay" placeholder="Time of Day" th:value="${appliedTimeOfDay}">
+        <select disabled><option>Recommended</option></select> <!-- sorting: not wired up yet -->
+        <button type="submit">Apply</button>
+        <a th:href="@{/home}">Clear filters</a>
+    </form>
+
+    <div style="margin-top: 10px;">
+        <span class="chip" th:if="${appliedCuisine != null and !appliedCuisine.isBlank()}"
+              th:text="${appliedCuisine}"></span>
+        <span class="chip" th:if="${appliedDietary != null and !appliedDietary.isBlank()}"
+              th:text="${appliedDietary}"></span>
+    </div>
+</div>
+
+<div class="card-grid">
+    <div class="card" th:each="event : ${events}"
+         th:style="${event.imageUrl != null} ? 'background-image: url(' + ${event.imageUrl} + ')' : ''">
+        <a th:href="@{'/events/' + ${event.eventId}}"
+           th:text="${event.description}"
+           style="color: white; text-decoration: none; font-weight: bold;"></a>
+    </div>
+    <p th:if="${events.isEmpty()}">No events match those filters yet.</p>
+</div>
+
+</body>
+</html>
