@@ -31,4 +31,11 @@ public class UserService {
                 .or(() -> userRepository.findByEmail(usernameOrEmail))
                 .orElse(null);
     }
+
+    public List<User> searchByUsername(String query) {
+        if (query == null || query.isBlank()) {
+            return List.of();
+        }
+        return userRepository.findByUsernameContainingIgnoreCase(query.trim());
+    }
 }

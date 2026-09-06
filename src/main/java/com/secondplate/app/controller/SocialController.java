@@ -69,7 +69,7 @@ public class SocialController {
 
     @GetMapping("/friends")
     public String friends(HttpSession session, @RequestParam(required = false) Long friendId,
-                          Model model) {
+                          @RequestParam(required = false) String q, Model model) {
         Long userId = currentUserId(session);
         if (userId == null) {
             return "redirect:/login";
@@ -84,9 +84,15 @@ public class SocialController {
                 .findFirst()
                 .orElse(friends.isEmpty() ? null : friends.get(0));
 
+        List<User> searchResults = userService.searchByUsername(q).stream()
+                .filter(user -> !user.getUserId().equals(userId))
+                .toList();
+
         model.addAttribute("user", currentUser);
         model.addAttribute("friends", friends);
         model.addAttribute("selectedFriend", selectedFriend);
+        model.addAttribute("searchQuery", q);
+        model.addAttribute("searchResults", searchResults);
         model.addAttribute("messages", selectedFriend == null
                 ? List.of()
                 : messageService.getConversation(userId, selectedFriend.getUserId()));

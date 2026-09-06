@@ -20,7 +20,28 @@
 </header>
 
 <main class="friends-page">
-    <section class="friends-title"><h1>Friends</h1><button type="button">+ Add Friends</button></section>
+    <section class="friends-title">
+        <h1>Friends</h1>
+        <form class="add-friend-form" th:action="@{/friends}" method="get">
+            <input type="text" name="q" placeholder="Search by username" th:value="${searchQuery}">
+            <button type="submit">+ Add Friends</button>
+        </form>
+    </section>
+
+    <section class="search-results" th:if="${searchQuery != null and !searchQuery.isBlank()}">
+        <h2>Results for "<span th:text="${searchQuery}"></span>"</h2>
+        <div class="search-results-list" th:if="${!searchResults.isEmpty()}">
+            <a class="search-result-row" th:each="result : ${searchResults}" th:href="@{/friends(friendId=${result.userId})}">
+                <span class="avatar"><img th:src="${result.profileImageUrl != null ? result.profileImageUrl : '/images/icon.png'}" alt=""></span>
+                <div>
+                    <strong th:text="${result.fullName}">Full name</strong>
+                    <span th:if="${result.username != null}" th:text="${'@' + result.username}">@username</span>
+                </div>
+            </a>
+        </div>
+        <p class="empty-state" th:if="${searchResults.isEmpty()}">No users found with that username.</p>
+    </section>
+
     <section class="messaging-layout">
         <aside class="friend-list">
             <a class="friend-row" th:each="friend : ${friends}"

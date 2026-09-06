@@ -40,7 +40,16 @@ button { cursor: pointer; }
 .profile-panel .empty-state { color: #f8d5c5; }
 .friends-title { padding: 20px 48px; display: flex; align-items: center; justify-content: space-between; background: #ee9676; color: #fff; }
 .friends-title h1 { margin: 0; font-size: 2.9rem; }
-.friends-title button { padding: 9px 15px; border: 0; border-radius: 7px; background: #bd4e1b; color: #fff; font-weight: 700; }
+.add-friend-form { display: flex; gap: 8px; }
+.add-friend-form input { padding: 9px 14px; border: 0; border-radius: 20px; min-width: 220px; }
+.friends-title button, .add-friend-form button { padding: 9px 15px; border: 0; border-radius: 7px; background: #bd4e1b; color: #fff; font-weight: 700; cursor: pointer; }
+.search-results { padding: 18px 48px 0; }
+.search-results h2 { margin: 0 0 10px; font-size: 1rem; color: #6b5f58; font-weight: 500; }
+.search-results-list { display: grid; gap: 10px; }
+.search-result-row { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border: 1px solid #e2cdb9; border-radius: 8px; color: #211a17; text-decoration: none; background: #fff; }
+.search-result-row:hover { box-shadow: 0 4px 12px #75402c26; }
+.search-result-row div { display: grid; gap: 2px; }
+.search-result-row span { color: #9b8176; font-size: .8rem; }
 .messaging-layout { min-height: 445px; padding: 15px 42px 38px; display: grid; grid-template-columns: 190px 1fr; gap: 20px; }
 .friend-list { display: grid; align-content: start; gap: 12px; }
 .friend-row { display: flex; align-items: center; gap: 14px; padding: 5px 2px; color: #211a17; text-decoration: none; }
