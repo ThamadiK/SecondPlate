@@ -35,6 +35,8 @@ button { cursor: pointer; }
 .form-column h2 { margin: 0 0 3px; font-size: 1.08rem; }
 .form-column label { display: grid; gap: 6px; color: #211a17; font-size: .86rem; font-weight: 700; }
 .form-column input, .form-column textarea { width: 100%; padding: 11px 13px; border: 1px solid #84756d; border-radius: 7px; outline: 0; background: #f8eadc; color: #211a17; font-size: .8rem; font-weight: 400; }
+.form-column select { width: 100%; padding: 11px 13px; border: 1px solid #84756d; border-radius: 7px; background: #f8eadc; color: #211a17; font-size: .8rem; }
+.recurring-fields, .one-time-fields { display: grid; gap: 15px; }
 .form-column textarea { resize: vertical; }
 .form-column input:focus, .form-column textarea:focus { border-color: #bd4e1b; box-shadow: 0 0 0 3px #bd4e1b22; }
 .create-button { justify-self: start; margin-top: 10px; padding: 12px 24px; border: 0; border-radius: 5px; background: #edab45; color: #211a17; font-weight: 700; }

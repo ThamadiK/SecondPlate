@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 // This java class represents an entity
 @Entity
@@ -28,6 +29,8 @@ public class Event {
     private LocalDateTime eventTime;
     private Integer capacity;
     private boolean recurring;
+    private String frequency;
+    private BigDecimal ticketPrice;
     private String description;
     private String cuisineType; 
     private String dietaryTags;  

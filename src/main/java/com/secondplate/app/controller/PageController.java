@@ -37,18 +37,26 @@ public class PageController {
     @PostMapping("/host-event/details")
     public String createEvent(
             @RequestParam String title,
-            @RequestParam LocalDate date,
-            @RequestParam LocalTime time,
+            @RequestParam(required = false) LocalDate date,
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalTime time,
             @RequestParam String location,
             @RequestParam Integer capacity,
+            @RequestParam(required = false) String frequency,
+            @RequestParam(required = false) java.math.BigDecimal ticketPrice,
             @RequestParam(required = false, defaultValue = "") String description,
             @RequestParam(defaultValue = "one-time") String type) {
+        boolean recurring = "recurring".equalsIgnoreCase(type);
         Event event = new Event();
         event.setTitle(title);
-        event.setEventTime(LocalDateTime.of(date, time));
+        LocalDate eventDate = recurring ? startDate : date;
+        LocalTime eventTime = time == null ? LocalTime.MIDNIGHT : time;
+        event.setEventTime(LocalDateTime.of(eventDate, eventTime));
         event.setLocation(location);
         event.setCapacity(capacity);
-        event.setRecurring("recurring".equalsIgnoreCase(type));
+        event.setRecurring(recurring);
+        event.setFrequency(recurring ? frequency : null);
+        event.setTicketPrice(ticketPrice);
         event.setDescription(description);
         eventService.createEvent(event);
         return "redirect:/host-event?created";
