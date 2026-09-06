@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=REM:wght@400;500;600;700&family=Reenie+Beanie&display=swap');
+
+:root { font-family: 'REM', sans-serif; color: #211a17; background: #f8eadc; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; font-size: 17px; }
+button, input { font: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+.auth-page { min-height: 100vh; display: grid; grid-template-columns: minmax(280px, 1fr) minmax(340px, 1.35fr); }
+
+.auth-panel { background: #ee9676; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; padding: 40px; }
+.auth-panel .brand-logo { width: 180px; height: auto; display: block; }
+.auth-panel .wordmark { margin: 0; font-family: 'Reenie Beanie', cursive; font-size: 2.8rem; line-height: 1; }
+.auth-panel .wordmark .second { color: #fdf3ea; }
+.auth-panel .wordmark .plate { color: #7a2f13; }
+
+.auth-form-side { display: flex; flex-direction: column; justify-content: center; padding: 60px 90px; }
+.auth-form-side .eyebrow { margin: 0 0 4px; color: #a99c92; font-size: .85rem; }
+.auth-form-side h1 { margin: 0 0 26px; font-size: 1.9rem; font-weight: 700; letter-spacing: -.02em; }
+
+.auth-form { display: grid; gap: 16px; max-width: 380px; }
+.auth-form input { width: 100%; padding: 14px 16px; border: 1px solid #ecdfd0; border-radius: 8px; background: #fff; color: #211a17; font-size: .95rem; }
+.auth-form input::placeholder { color: #a99c92; }
+.auth-form input:focus { outline: 0; border-color: #bd4e1b; box-shadow: 0 0 0 3px #bd4e1b22; }
+
+.auth-submit { margin-top: 10px; padding: 14px; border: 0; border-radius: 6px; background: #edab45; color: #211a17; font-size: 1rem; font-weight: 600; transition: background .15s ease; }
+.auth-submit:hover { background: #e0982e; }
+
+.auth-error { margin: -6px 0 0; color: #b7481b; font-size: .85rem; font-weight: 500; }
+.auth-success { margin: -6px 0 0; color: #5c7a3f; font-size: .85rem; font-weight: 500; }
+
+.auth-footer { margin-top: 20px; max-width: 380px; font-size: .92rem; }
+.auth-footer a { color: #a65335; font-weight: 600; text-decoration: none; }
+.auth-footer a:hover { text-decoration: underline; }
+
+@media (max-width: 760px) {
+    .auth-page { grid-template-columns: 1fr; }
+    .auth-panel { padding: 30px; min-height: 200px; gap: 16px; }
+    .auth-panel .brand-logo { width: 120px; }
+    .auth-panel .wordmark { font-size: 2.1rem; }
+    .auth-form-side { padding: 36px 26px; }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | SecondPlate</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+<div class="auth-page">
+    <aside class="auth-panel">
+        <img class="brand-logo" th:src="@{/images/login-logo.png}" alt="">
+        <p class="wordmark"><span class="second">Second</span><span class="plate">Plate</span></p>
+    </aside>
+
+    <section class="auth-form-side">
+        <h1>Registration</h1>
+        <p class="auth-error" th:if="${error}" th:text="${error}">Passwords do not match</p>
+        <form class="auth-form" th:action="@{/register}" method="post">
+            <input type="text" name="fullName" placeholder="Full Name" th:value="${fullName}" required autofocus>
+            <input type="text" name="username" placeholder="Username" th:value="${username}" required>
+            <input type="email" name="email" placeholder="Email" th:value="${email}" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="passwordConfirmation" placeholder="Password Confirmation" required>
+            <input type="tel" name="phoneNumber" placeholder="Phone Number" th:value="${phoneNumber}" required>
+            <button class="auth-submit" type="submit">Continue</button>
+        </form>
+        <p class="auth-footer">Already have an account? <a th:href="@{/login}">Log in</a></p>
+    </section>
+</div>
+</body>
+</html>
