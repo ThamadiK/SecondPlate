@@ -26,3 +26,9 @@ replay_pid*
 
 # macOS
 .DS_Store
+
+# Maven build directory
+target/
+
+# VS Code
+.vscode/
