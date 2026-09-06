@@ -25,4 +25,10 @@ public class UserService {
         // business rules (e.g. "email must be unique") go here later
         return userRepository.save(user);
     }
+
+    public User findByUsernameOrEmail(String usernameOrEmail) {
+        return userRepository.findByUsername(usernameOrEmail)
+                .or(() -> userRepository.findByEmail(usernameOrEmail))
+                .orElse(null);
+    }
 }
