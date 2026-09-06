@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${event.title} + ' | SecondPlate'">Event | SecondPlate</title>
+    <link rel="stylesheet" th:href="@{/css/events.css}">
+</head>
+<body>
+<div th:replace="~{layout :: site-header('bookings')}"></div>
+
+<main>
+    <section class="event-hero">
+        <h1 th:text="${event.title}">Event Title</h1>
+        <p th:text="'Hosted by ' + ${organizerName}">Hosted by</p>
+        <p class="next-event" th:if="${event.recurring}"
+           th:text="'Next Event: ' + ${#temporals.format(event.eventDate, 'd MMMM yyyy')}">Next Event</p>
+    </section>
+
+    <!-- One-time event: details + booking -->
+    <section class="event-body one-time" th:unless="${event.recurring}">
+        <div class="details-column">
+            <h2>Details</h2>
+            <p><strong>Date:</strong> <span th:text="${#temporals.format(event.eventDate, 'EEEE, d MMMM')}"></span></p>
+            <p><strong>Time:</strong> <span th:text="${#temporals.format(event.eventTime, 'h:mm a')}"></span></p>
+            <p><strong>Location:</strong> <span th:text="${event.location}"></span></p>
+
+            <h2>About the event</h2>
+            <p class="about-text" th:text="${event.description}"></p>
+
+            <h2>Inquiry</h2>
+            <p>For further information and questions please send a message!</p>
+        </div>
+        <div class="side-column">
+            <h2>Location</h2>
+            <div class="location-map"><img th:src="@{/images/location.png}" alt="Location"></div>
+
+            <h2>Tags</h2>
+            <div class="tags" th:if="${!tags.isEmpty()}">
+                <button type="button" th:each="tag : ${tags}" th:text="${tag}"></button>
+            </div>
+            <p class="no-tags" th:if="${tags.isEmpty()}">No tags added.</p>
+
+            <div class="price-block">
+                <p class="price" th:text="'$' + ${event.ticketPrice}">$0.00</p>
+                <p class="event-datetime" th:text="${#temporals.format(event.eventDate, 'EEE, d MMMM yyyy')} + ' - ' + ${#temporals.format(event.eventTime, 'h:mm a')}"></p>
+                <a th:if="${currentUserId != null}" class="save-button" th:href="@{/events/{id}/book(id=${event.eventId})}">Save your seat</a>
+                <a th:unless="${currentUserId != null}" class="save-button" th:href="@{/login}">Log in to save your seat</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recurring event: attendees + group chat -->
+    <section class="event-body recurring" th:if="${event.recurring}">
+        <aside class="attendee-column">
+            <ul class="attendee-list">
+                <li th:each="attendee : ${attendees}">
+                    <img th:src="@{/images/icon.png}" alt="">
+                    <span th:text="${attendee.fullName}"></span>
+                    <span class="check" aria-hidden="true">✓</span>
+                </li>
+            </ul>
+            <p class="no-attendees" th:if="${attendees.isEmpty()}">No one has joined yet.</p>
+
+            <form th:if="${currentUserId != null and !alreadyJoined}" th:action="@{/events/{id}/join(id=${event.eventId})}" method="post">
+                <button class="join-button" type="submit">I'm going</button>
+            </form>
+            <p class="already-joined" th:if="${alreadyJoined}">You're going!</p>
+            <a th:if="${currentUserId == null}" class="join-button" th:href="@{/login}">Log in to join</a>
+        </aside>
+
+        <div class="chat-panel">
+            <div class="chat-messages">
+                <div th:each="message : ${messages}"
+                     th:class="${message.senderUserId == currentUserId} ? 'message mine' : 'message theirs'">
+                    <p class="sender" th:if="${message.senderUserId != currentUserId}"
+                       th:text="${usersById.get(message.senderUserId) != null ? usersById.get(message.senderUserId).fullName : 'Unknown'}"></p>
+                    <p class="bubble" th:text="${message.body}"></p>
+                    <span class="time" th:text="${#temporals.format(message.sentAt, 'h:mm a')}"></span>
+                </div>
+                <p class="no-messages" th:if="${messages.isEmpty()}">No messages yet — say hi!</p>
+            </div>
+            <form th:if="${currentUserId != null}" class="chat-input" th:action="@{/events/{id}/messages(id=${event.eventId})}" method="post">
+                <input type="text" name="body" placeholder="Type a message" required>
+                <button type="submit">Send</button>
+            </form>
+            <p th:if="${currentUserId == null}"><a th:href="@{/login}">Log in</a> to join the conversation.</p>
+        </div>
+    </section>
+</main>
+</body>
+</html>
