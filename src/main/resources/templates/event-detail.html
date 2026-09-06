@@ -33,7 +33,11 @@
         </div>
         <div class="side-column">
             <h2>Location</h2>
-            <div class="location-map"><img th:src="@{/images/location.png}" alt="Location"></div>
+            <div class="location-map">
+                <img th:src="@{/images/map.png}" alt="Map showing the event location">
+                <span class="radius-circle" aria-hidden="true"></span>
+                <span class="radius-label">5km radius</span>
+            </div>
 
             <h2>Tags</h2>
             <div class="tags" th:if="${!tags.isEmpty()}">

@@ -60,7 +60,7 @@ public class PageController {
             return "login-page";
         }
         session.setAttribute(SESSION_USER_ID, user.getUserId());
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/logout")

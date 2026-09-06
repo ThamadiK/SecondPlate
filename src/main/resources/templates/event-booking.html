@@ -53,10 +53,10 @@
                 <input type="text" name="dietaryRequirements">
             </label>
 
-            <div class="booking-summary">
-                <button class="save-button" type="submit">Save your seat</button>
+            <div class="price-block">
                 <p class="price" th:text="'$' + ${event.ticketPrice}">$0.00</p>
                 <p class="event-datetime" th:text="${#temporals.format(event.eventDate, 'EEE, d MMMM yyyy')} + ' - ' + ${#temporals.format(event.eventTime, 'h:mm a')}"></p>
+                <button class="save-button" type="submit">Save your seat</button>
             </div>
         </form>
     </section>

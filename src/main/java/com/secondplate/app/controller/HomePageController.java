@@ -1,6 +1,7 @@
 package com.secondplate.app.controller;
 
 import com.secondplate.app.service.EventService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,15 +9,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 // Handles HTTP requests
-@Controller 
+@Controller
 public class HomePageController {
 
     @Autowired
     private EventService eventService;
 
-    // "/" has no page of its own - it just sends visitors (and post-login redirects) to the home feed
+    // "/" has no page of its own - login is the front door, so anyone not
+    // signed in lands there first; a signed-in visitor goes straight to the feed.
     @GetMapping("/")
-    public String root() {
+    public String root(HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/login";
+        }
         return "redirect:/home";
     }
 
