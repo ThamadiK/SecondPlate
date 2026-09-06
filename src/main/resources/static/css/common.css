@@ -1,0 +1,105 @@
+/* Fonts: Reenie Beanie for the logo wordmark, REM (weight 500) for everything else */
+@import url('https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=REM:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'REM', sans-serif;
+    font-weight: 500;
+    background: #f5e9dc;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 40px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.brand img {
+    height: 40px;
+    width: 40px;
+}
+
+.brand-name {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 30px;
+}
+
+.brand-second {
+    color: #d9a441;
+}
+
+.brand-plate {
+    color: #a3512e;
+}
+
+.main-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav a {
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+.main-nav a.active {
+    font-weight: 700;
+    border-bottom: 2px solid #a3512e;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 20px;
+    padding: 8px 16px;
+    gap: 8px;
+    flex: 1;
+    max-width: 260px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-family: inherit;
+}
+
+.location,
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+}
+
+.location img,
+.profile img {
+    height: 20px;
+    width: 20px;
+}
