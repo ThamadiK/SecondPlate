@@ -2,7 +2,6 @@ package com.secondplate.app.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -54,6 +53,15 @@ public class Event {
 
     public Integer getCapacity() { return capacity; }
     public void setCapacity(Integer capacity) { this.capacity = capacity; }
+
+    public boolean getRecurring() { return recurring; }
+    public void setRecurring(boolean recurring) { this.recurring = recurring; }
+
+    public String getFrequency() { return frequency; }
+    public void setFrequency(String frequency) { this.frequency = frequency; }
+
+    public BigDecimal getTicketPrice() { return ticketPrice; }
+    public void setTicketPrice(BigDecimal ticketPrice) { this.ticketPrice = ticketPrice; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
