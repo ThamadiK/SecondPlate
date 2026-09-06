@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${eventType} + ' | SecondPlate'">Create Event | SecondPlate</title>
+    <link rel="stylesheet" th:href="@{/css/host-event.css}">
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="/"><img th:src="@{/images/logo.png}" alt="SecondPlate"></a>
+    <nav class="main-nav" aria-label="Main navigation">
+        <a class="active" href="/host-event">Host an Event</a>
+        <a href="#bookings">My Bookings</a>
+        <a href="#friends">Friends</a>
+    </nav>
+    <label class="search-box">
+        <span class="sr-only">Search</span>
+        <input type="search" placeholder="Search">
+        <span aria-hidden="true">⌕</span>
+    </label>
+    <button class="location" type="button">⌖ Melbourne</button>
+    <button class="profile" type="button" aria-label="Open profile">●</button>
+</header>
+
+<main>
+    <section class="page-hero">
+        <h1>Host a Get Together</h1>
+        <p>Enter details and get it together</p>
+    </section>
+
+    <form class="details-section" th:action="@{/host-event/details}" method="post">
+        <input type="hidden" name="type" th:value="${recurring ? 'recurring' : 'one-time'}">
+        <div class="form-column">
+            <a class="back-link" href="/host-event">← Change event type</a>
+            <p class="eyebrow" th:text="${eventType}">One-Time Event</p>
+            <h2>Event details</h2>
+            <label>Event name <input type="text" name="title" placeholder="Give your event a name" required></label>
+            <label>Time <input type="time" name="time" value="19:00" required></label>
+            <label>Date <input type="date" name="date" required></label>
+            <label>Location <input type="text" name="location" placeholder="Where is it happening?" required></label>
+            <label>Capacity <input type="number" name="capacity" min="1" placeholder="How many people?" required></label>
+            <button class="create-button" type="submit">Create Get Together</button>
+        </div>
+
+        <div class="form-column side-column">
+            <div>
+                <h2>Enter Tags</h2>
+                <div class="tags">
+                    <button type="button">Vegan</button>
+                    <button type="button">Soy</button>
+                    <button type="button">Gluten free</button>
+                    <button type="button">Indonesian Cuisine</button>
+                    <button class="add-tag" type="button">+</button>
+                </div>
+            </div>
+            <label>Description <textarea name="description" rows="6" placeholder="Tell people what to expect"></textarea></label>
+            <label class="cover-label">Add a cover picture <input type="file" name="coverPicture" accept="image/png,image/jpeg"></label>
+            <p class="recurring-hint" th:if="${recurring}">This event will repeat with the same group.</p>
+        </div>
+    </form>
+</main>
+</body>
+</html>

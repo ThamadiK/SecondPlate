@@ -27,6 +27,7 @@ public class Event {
     private String location;
     private LocalDateTime eventTime;
     private Integer capacity;
+    private boolean recurring;
     private String description;
     private String cuisineType; 
     private String dietaryTags;  
