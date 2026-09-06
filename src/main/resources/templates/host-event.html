@@ -8,7 +8,10 @@
 </head>
 <body>
 <header class="site-header">
-    <a class="brand" href="/"><img th:src="@{/images/logo.png}" alt="SecondPlate"></a>
+    <a class="brand" href="/">
+        <img th:src="@{/images/logo.png}" alt="">
+        <span class="brand-name"><span class="brand-second">Second</span><span class="brand-plate">Plate</span></span>
+    </a>
     <nav class="main-nav" aria-label="Main navigation">
         <a class="active" href="/host-event">Host an Event</a>
         <a href="#bookings">My Bookings</a>
@@ -19,8 +22,8 @@
         <input type="search" placeholder="Search">
         <span aria-hidden="true">⌕</span>
     </label>
-    <button class="location" type="button">⌖ Melbourne</button>
-    <button class="profile" type="button" aria-label="Open profile">●</button>
+    <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
+    <button class="profile" type="button" aria-label="Open profile"><img th:src="@{/images/icon.png}" alt=""></button>
 </header>
 
 <main>
