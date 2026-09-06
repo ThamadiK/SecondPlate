@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed | SecondPlate</title>
+    <link rel="stylesheet" th:href="@{/css/host-event.css}">
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="/">
+        <img th:src="@{/images/logo.png}" alt="">
+        <span class="brand-name"><span class="brand-second">Second</span><span class="brand-plate">Plate</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+        <a href="/host-event">Host an Event</a>
+        <a href="#bookings">My Bookings</a>
+        <a href="#friends">Friends</a>
+    </nav>
+    <label class="search-box">
+        <span class="sr-only">Search</span>
+        <input type="search" placeholder="Search">
+        <span aria-hidden="true">⌕</span>
+    </label>
+    <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
+    <button class="profile" type="button" aria-label="Open profile"><img th:src="@{/images/icon.png}" alt=""></button>
+</header>
+
+<main>
+    <section class="page-hero">
+        <h1>Booking Confirmed</h1>
+        <p th:text="${event.title}">Event Title</p>
+        <p th:text="'Time: ' + ${#temporals.format(event.eventTime, 'h:mm a')}">Time</p>
+        <p th:text="'Location: ' + ${event.location}">Location</p>
+        <p>Booking details will be sent to your email shortly.</p>
+    </section>
+</main>
+</body>
+</html>
