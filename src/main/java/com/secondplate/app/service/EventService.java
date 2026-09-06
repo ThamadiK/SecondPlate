@@ -42,4 +42,8 @@ public class EventService {
     private boolean isBlank(String s) {
         return s == null || s.isBlank();
     }
+
+    public List<Event> getRecurringEvents() {
+        return eventRepository.findByRecurring(true);
+    }
 }

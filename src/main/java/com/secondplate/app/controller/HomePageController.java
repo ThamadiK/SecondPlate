@@ -1,12 +1,17 @@
 package com.secondplate.app.controller;
 
+import com.secondplate.app.model.Event;
+import com.secondplate.app.service.BookingService;
 import com.secondplate.app.service.EventService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 // Handles HTTP requests
 @Controller
@@ -25,7 +30,10 @@ public class HomePageController {
         return "redirect:/home";
     }
 
-    // maps the URL "/homePage" to this method
+    @Autowired
+    private BookingService bookingService; 
+
+    // maps the URL "/home" to this method
     @GetMapping("/home")
     public String showHomePage(
             @RequestParam(required = false) String cuisine,
@@ -43,6 +51,16 @@ public class HomePageController {
         model.addAttribute("appliedDietary", dietaryTags);
         model.addAttribute("appliedTimeOfDay", timeOfDay);
 
+        // data for the Recurring Get-Together Groups section
+        List<Event> recurringEvents = eventService.getRecurringEvents();
+        Map<Long, Long> bookingCounts = new LinkedHashMap<>();
+        for (Event event : recurringEvents) {
+            bookingCounts.put(event.getEventId(), bookingService.getBookingCount(event.getEventId()));
+        }
+        model.addAttribute("recurringEvents", recurringEvents);
+        model.addAttribute("bookingCounts", bookingCounts);
+
         return "home"; // resolves to src/main/resources/templates/homePage.html
     }
+
 }

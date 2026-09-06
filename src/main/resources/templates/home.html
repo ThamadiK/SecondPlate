@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
+
 <body>
 
 <header class="site-header">
@@ -35,7 +36,6 @@
         <input type="text" name="cuisine" placeholder="Cuisine" th:value="${appliedCuisine}">
         <input type="text" name="dietary" placeholder="Dietary Needs" th:value="${appliedDietary}">
         <input type="text" name="timeOfDay" placeholder="Time of Day" th:value="${appliedTimeOfDay}">
-        <select disabled><option>Recommended</option></select>
         <button type="submit">Apply</button>
         <a th:href="@{/home}">Clear filters</a>
     </form>
@@ -56,6 +56,31 @@
     </div>
     <p th:if="${events.isEmpty()}">No events match those filters yet.</p>
 </div>
+
+<section class="groups-section">
+    <div class="groups-header">
+        <h2>Recurring Get-Together Groups</h2>
+        <a href="#" class="see-all">See all</a>
+    </div>
+
+    <div class="group-row" th:each="event : ${recurringEvents}">
+        <div class="group-photo" th:if="${event.imageUrl != null}"
+             th:style="'background-image: url(' + @{${event.imageUrl}} + ')'"></div>
+        <div class="group-photo group-photo-placeholder" th:if="${event.imageUrl == null}"></div>
+
+        <div class="group-info">
+            <strong th:text="${event.title} + ' (' + ${bookingCounts.get(event.eventId)} + '/' + ${event.capacity} + ')'"></strong>
+            <div class="group-time"
+                 th:text="|${#temporals.format(event.eventDate, 'd MMM')}, ${#temporals.format(event.eventTime, 'HH:mm')}|"></div>
+        </div>
+
+        <form th:action="@{'/events/' + ${event.eventId} + '/join'}" method="post">
+            <button class="join-btn" type="submit">Join Group</button>
+        </form>
+    </div>
+
+    <p th:if="${recurringEvents.isEmpty()}">No recurring groups yet.</p>
+</section>
 
 </body>
 </html>

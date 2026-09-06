@@ -8,4 +8,5 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByEventIdOrderByBookingIdAsc(Long eventId);
     boolean existsByEventIdAndUserId(Long eventId, Long userId);
+    long countByEventId(Long eventId);
 }

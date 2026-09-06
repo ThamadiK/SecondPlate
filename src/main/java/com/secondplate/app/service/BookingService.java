@@ -5,6 +5,7 @@ import com.secondplate.app.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -43,4 +44,9 @@ public class BookingService {
         booking.setUserId(userId);
         return bookingRepository.save(booking);
     }
+
+    public long getBookingCount(Long eventId) {
+        return bookingRepository.countByEventId(eventId);
+    }
+    
 }
