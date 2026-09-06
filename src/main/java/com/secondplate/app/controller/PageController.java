@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -151,8 +152,14 @@ public class PageController {
         event.setTicketPrice(ticketPrice);
         event.setDescription(description);
         event.setOrganizerId(userId);
-        eventService.createEvent(event);
-        return "redirect:/host-event?created";
+        Event created = eventService.createEvent(event);
+        return "redirect:/host-event/" + created.getEventId() + "/confirm";
+    }
+
+    @GetMapping("/host-event/{id}/confirm")
+    public String hostEventConfirm(@PathVariable Long id, Model model) {
+        model.addAttribute("event", requireEvent(id));
+        return "create-confirm";
     }
 
     @GetMapping("/events/{id}")
@@ -223,8 +230,18 @@ public class PageController {
         booking.setCardNumber(cardNumber);
         booking.setCardExpiry(cardExpiry);
         booking.setDietaryRequirements(dietaryRequirements);
-        bookingService.createBooking(booking);
-        return "redirect:/events/" + id + "?booked";
+        Booking created = bookingService.createBooking(booking);
+        return "redirect:/bookings/" + created.getBookingId() + "/confirm";
+    }
+
+    @GetMapping("/bookings/{id}/confirm")
+    public String bookingConfirm(@PathVariable Long id, Model model) {
+        Booking booking = bookingService.getBookingById(id);
+        if (booking == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found");
+        }
+        model.addAttribute("event", requireEvent(booking.getEventId()));
+        return "booking-confirm";
     }
 
     @PostMapping("/events/{id}/join")
@@ -249,6 +266,55 @@ public class PageController {
             messageService.postMessage(id, userId, body.trim());
         }
         return "redirect:/events/" + id;
+    }
+
+    @GetMapping("/my-bookings")
+    public String myBookings(HttpSession session, Model model) {
+        Long userId = currentUserId(session);
+        if (userId == null) {
+            return "redirect:/login";
+        }
+        List<BookingWithEvent> upcoming = new ArrayList<>();
+        List<BookingWithEvent> past = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Booking booking : bookingService.getBookingsForUser(userId)) {
+            Event event = eventService.getEventById(booking.getEventId());
+            if (event == null) {
+                continue;
+            }
+            BookingWithEvent row = new BookingWithEvent(booking, event);
+            if (eventDateTime(event).isBefore(now)) {
+                past.add(row);
+            } else {
+                upcoming.add(row);
+            }
+        }
+
+        upcoming.sort((a, b) -> eventDateTime(a.getEvent()).compareTo(eventDateTime(b.getEvent())));
+        past.sort((a, b) -> eventDateTime(b.getEvent()).compareTo(eventDateTime(a.getEvent())));
+
+        model.addAttribute("upcomingBookings", upcoming);
+        model.addAttribute("pastBookings", past);
+        return "my-bookings";
+    }
+
+    private LocalDateTime eventDateTime(Event event) {
+        return LocalDateTime.of(event.getEventDate(), event.getEventTime());
+    }
+
+    // View-only pairing of a booking with its event, for rendering "My Bookings".
+    public static class BookingWithEvent {
+        private final Booking booking;
+        private final Event event;
+
+        public BookingWithEvent(Booking booking, Event event) {
+            this.booking = booking;
+            this.event = event;
+        }
+
+        public Booking getBooking() { return booking; }
+        public Event getEvent() { return event; }
     }
 
     private Long currentUserId(HttpSession session) {

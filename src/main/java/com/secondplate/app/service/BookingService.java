@@ -48,5 +48,8 @@ public class BookingService {
     public long getBookingCount(Long eventId) {
         return bookingRepository.countByEventId(eventId);
     }
-    
+
+    public List<Booking> getBookingsForUser(Long userId) {
+        return bookingRepository.findByUserIdOrderByBookingIdDesc(userId);
+    }
 }

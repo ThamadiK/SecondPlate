@@ -8,7 +8,7 @@
     </a>
     <nav class="main-nav" aria-label="Main navigation">
         <a th:classappend="${active == 'host'} ? 'active'" href="/host-event">Host an Event</a>
-        <a th:classappend="${active == 'bookings'} ? 'active'" href="#bookings">My Bookings</a>
+        <a th:classappend="${active == 'bookings'} ? 'active'" th:href="@{/my-bookings}">My Bookings</a>
         <a th:classappend="${active == 'friends'} ? 'active'" href="/friends">Friends</a>
     </nav>
     <label class="search-box">
@@ -16,7 +16,15 @@
         <input type="search" placeholder="Search">
         <span aria-hidden="true">⌕</span>
     </label>
-    <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
+    <label class="location">
+        <img th:src="@{/images/location.png}" alt="">
+        <select aria-label="Location">
+            <option value="Melbourne">Melbourne</option>
+            <option value="Sydney">Sydney</option>
+            <option value="Brisbane">Brisbane</option>
+            <option value="Perth">Perth</option>
+        </select>
+    </label>
     <a class="profile" href="/profile" aria-label="Open profile">
         <img th:src="@{/images/icon.png}" alt="">
     </a>

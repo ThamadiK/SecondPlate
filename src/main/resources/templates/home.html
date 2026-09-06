@@ -17,7 +17,7 @@
     </a>
     <nav class="main-nav" aria-label="Main navigation">
         <a href="/host-event">Host an Event</a>
-        <a href="#bookings">My Bookings</a>
+        <a th:href="@{/my-bookings}">My Bookings</a>
         <a href="#friends">Friends</a>
     </nav>
     <label class="search-box">
@@ -25,7 +25,15 @@
         <input type="search" name="search" placeholder="Search" form="filterForm" th:value="${appliedSearch}">
         <span aria-hidden="true">⌕</span>
     </label>
-    <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
+    <label class="location">
+        <img th:src="@{/images/location.png}" alt="">
+        <select aria-label="Location">
+            <option value="Melbourne">Melbourne</option>
+            <option value="Sydney">Sydney</option>
+            <option value="Brisbane">Brisbane</option>
+            <option value="Perth">Perth</option>
+        </select>
+    </label>
     <button class="profile" type="button" aria-label="Open profile"><img th:src="@{/images/icon.png}" alt=""></button>
 </header>
 

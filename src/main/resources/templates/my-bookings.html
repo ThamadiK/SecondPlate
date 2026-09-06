@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings | SecondPlate</title>
+    <link rel="stylesheet" th:href="@{/css/events.css}">
+</head>
+<body>
+<div th:replace="~{layout :: site-header('bookings')}"></div>
+
+<main>
+    <section class="page-hero">
+        <h1>My Bookings</h1>
+        <p>Everything you've booked or joined, in one place</p>
+    </section>
+
+    <section class="bookings-section">
+        <h2>Upcoming</h2>
+        <div class="bookings-list" th:if="${!upcomingBookings.isEmpty()}">
+            <a class="booking-card" th:each="row : ${upcomingBookings}" th:href="@{/events/{id}(id=${row.event.eventId})}">
+                <div class="booking-card-main">
+                    <strong th:text="${row.event.title}">Event title</strong>
+                    <span th:text="${row.event.location}">Location</span>
+                </div>
+                <div class="booking-card-meta">
+                    <span th:text="${#temporals.format(row.event.eventDate, 'EEE, d MMMM yyyy')} + ' - ' + ${#temporals.format(row.event.eventTime, 'h:mm a')}"></span>
+                    <span class="badge" th:if="${row.event.recurring}">Recurring</span>
+                </div>
+            </a>
+        </div>
+        <p class="no-bookings" th:if="${upcomingBookings.isEmpty()}">No upcoming bookings yet — go find something to join!</p>
+
+        <h2>Past</h2>
+        <div class="bookings-list" th:if="${!pastBookings.isEmpty()}">
+            <a class="booking-card past" th:each="row : ${pastBookings}" th:href="@{/events/{id}(id=${row.event.eventId})}">
+                <div class="booking-card-main">
+                    <strong th:text="${row.event.title}">Event title</strong>
+                    <span th:text="${row.event.location}">Location</span>
+                </div>
+                <div class="booking-card-meta">
+                    <span th:text="${#temporals.format(row.event.eventDate, 'EEE, d MMMM yyyy')} + ' - ' + ${#temporals.format(row.event.eventTime, 'h:mm a')}"></span>
+                    <span class="badge" th:if="${row.event.recurring}">Recurring</span>
+                </div>
+            </a>
+        </div>
+        <p class="no-bookings" th:if="${pastBookings.isEmpty()}">No past bookings yet.</p>
+    </section>
+</main>
+</body>
+</html>
