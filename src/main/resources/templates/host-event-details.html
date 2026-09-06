@@ -47,12 +47,18 @@
         <div class="form-column side-column">
             <div>
                 <h2>Enter Tags</h2>
-                <div class="tags">
-                    <button type="button">Vegan</button>
-                    <button type="button">Soy</button>
-                    <button type="button">Gluten free</button>
-                    <button type="button">Indonesian Cuisine</button>
-                    <button class="add-tag" type="button">+</button>
+                <div class="tag-picker" data-tag-picker>
+                    <div class="tags" data-selected-tags></div>
+                    <button class="add-tag" type="button" data-add-tag aria-label="Add dietary tag">+</button>
+                    <div class="tag-menu" data-tag-menu hidden>
+                        <label for="dietary-tag-select">Choose a dietary tag</label>
+                        <select id="dietary-tag-select" data-tag-select>
+                            <option value="">Choose a tag</option>
+                            <option th:each="tag : ${dietaryTags}"
+                                    th:value="${tag}"
+                                    th:text="${tag}">Dietary tag</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <label>Description <textarea name="description" rows="6" placeholder="Tell people what to expect, including what's on the menu"></textarea></label>
@@ -61,5 +67,6 @@
         </div>
     </form>
 </main>
+<script th:src="@{/js/host-event-tags.js}"></script>
 </body>
 </html>

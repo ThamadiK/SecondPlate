@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Comparator;
 
 @Service
 public class EventService {
@@ -21,6 +22,28 @@ public class EventService {
 
     public Event getEventById(Long id) {
         return eventRepository.findById(id).orElse(null);
+    }
+
+    public List<String> getAvailableCuisineTypes() {
+        return eventRepository.findAll().stream()
+                .map(Event::getCuisineType)
+                .filter(value -> value != null && !value.isBlank())
+                .map(String::trim)
+                .distinct()
+                .sorted(Comparator.naturalOrder())
+                .toList();
+    }
+
+    public List<String> getAvailableDietaryTags() {
+        return eventRepository.findAll().stream()
+                .map(Event::getDietaryTags)
+                .filter(value -> value != null && !value.isBlank())
+                .flatMap(value -> java.util.Arrays.stream(value.split(",")))
+                .map(String::trim)
+                .filter(value -> !value.isBlank())
+                .distinct()
+                .sorted(Comparator.naturalOrder())
+                .toList();
     }
 
     public List<Event> getEventsHostedBy(Long organizerId) {

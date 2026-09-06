@@ -50,7 +50,16 @@ button { cursor: pointer; }
 .side-column h2 { margin-bottom: 8px; font-size: 1.25rem; }
 .tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .tags button { padding: 4px 10px; border: 0; border-radius: 4px; background: #bd4e1b; color: #fff; font-size: .82rem; font-weight: 500; }
-.tags .add-tag { padding: 2px 8px; font-size: 1.15rem; }
+.tag-picker { position: relative; display: flex; align-items: flex-start; flex-wrap: wrap; gap: 7px; }
+.tag-picker .add-tag { padding: 2px 8px; border: 0; border-radius: 4px; background: #bd4e1b; color: #fff; font-size: 1.15rem; }
+.tag-menu { flex-basis: 100%; display: grid; gap: 6px; max-width: 230px; margin-top: 4px; }
+.tag-menu[hidden] { display: none; }
+.tag-menu label { font-size: .82rem; }
+.tag-menu select { padding: 7px 9px; font-size: .82rem; }
+.tag-option { display: inline-flex !important; width: auto !important; cursor: default; }
+.tag-option input { display: none; }
+.tag-option span { padding: 5px 9px; border-radius: 4px; background: #bd4e1b; color: #fff; font-size: .82rem; font-weight: 500; }
+.remove-tag { margin-left: 5px; padding: 0 !important; background: transparent !important; color: #fff; font-size: .72rem !important; }
 .cover-label input { padding: 7px; }
 .recurring-hint { margin: -5px 0 0; color: #a65335; font-size: .88rem; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
