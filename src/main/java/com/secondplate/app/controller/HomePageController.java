@@ -36,6 +36,7 @@ public class HomePageController {
     // maps the URL "/home" to this method
     @GetMapping("/home")
     public String showHomePage(
+            @RequestParam(required = false) String search,
             @RequestParam(required = false) String cuisine,
             @RequestParam(required = false) String dietaryTags,
             @RequestParam(required = false) String timeOfDay,
@@ -44,9 +45,10 @@ public class HomePageController {
         // Model is a data structure that holds the data we want to pass to the view
         // The view is the HTML template that will be rendered and sent to the user's browser
         // Make events available to the view under the name "events" (the name bthe HTML template uses to access the data)        
-        model.addAttribute("events", eventService.getFilteredEvents(cuisine, dietaryTags, timeOfDay));
+        model.addAttribute("events", eventService.getFilteredEvents(search, cuisine, dietaryTags, timeOfDay));
 
         // echo the applied filters back so the template can show them as removable chips maybe later on?
+        model.addAttribute("appliedSearch", search);
         model.addAttribute("appliedCuisine", cuisine);
         model.addAttribute("appliedDietary", dietaryTags);
         model.addAttribute("appliedTimeOfDay", timeOfDay);

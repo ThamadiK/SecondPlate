@@ -28,16 +28,17 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    public List<Event> getFilteredEvents(String cuisine, String dietaryTags, String timeOfDay) {
+    public List<Event> getFilteredEvents(String search, String cuisine, String dietaryTags, String timeOfDay) {
         // filter -> Keep only the elements that satisfy this condition. 
         // e represents each individual event
         return eventRepository.findAll().stream()
-                .filter(e -> isBlank(cuisine) || cuisine.equalsIgnoreCase(e.getCuisineType()))
-                .filter(e -> isBlank(dietaryTags) || (e.getDietaryTags() != null
-                        && e.getDietaryTags().toLowerCase().contains(dietaryTags.toLowerCase())))
-                .filter(e -> isBlank(timeOfDay) || timeOfDay.equalsIgnoreCase(e.getTimeOfDay()))
-                .toList();
-    }
+                        .filter(e -> isBlank(search) || matchesSearch(e, search))
+                        .filter(e -> isBlank(cuisine) || cuisine.equalsIgnoreCase(e.getCuisineType()))
+                        .filter(e -> isBlank(dietaryTags) || (e.getDietaryTags() != null
+                                && e.getDietaryTags().toLowerCase().contains(dietaryTags.toLowerCase())))
+                        .filter(e -> isBlank(timeOfDay) || timeOfDay.equalsIgnoreCase(e.getTimeOfDay()))
+                        .toList();
+    }  
 
     private boolean isBlank(String s) {
         return s == null || s.isBlank();
@@ -45,5 +46,17 @@ public class EventService {
 
     public List<Event> getRecurringEvents() {
         return eventRepository.findByRecurring(true);
+    }
+
+    private boolean matchesSearch(Event e, String search) {
+        String term = search.toLowerCase();
+        return containsIgnoreCase(e.getTitle(), term)
+            || containsIgnoreCase(e.getLocation(), term)
+            || containsIgnoreCase(e.getDescription(), term)
+            || containsIgnoreCase(e.getCuisineType(), term);
+    }
+        
+    private boolean containsIgnoreCase(String field, String term) {
+        return field != null && field.toLowerCase().contains(term);
     }
 }

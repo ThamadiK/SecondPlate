@@ -22,7 +22,7 @@
     </nav>
     <label class="search-box">
         <span class="sr-only">Search</span>
-        <input type="search" placeholder="Search">
+        <input type="search" name="search" placeholder="Search" form="filterForm" th:value="${appliedSearch}">
         <span aria-hidden="true">⌕</span>
     </label>
     <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
@@ -32,7 +32,7 @@
 <h1 class="page-title">Get-togethers Near You</h1>
 
 <div class="filters">
-    <form method="get" th:action="@{/home}">
+    <form method="get" th:action="@{/home}" id="filterForm">
         <input type="text" name="cuisine" placeholder="Cuisine" th:value="${appliedCuisine}">
         <input type="text" name="dietary" placeholder="Dietary Needs" th:value="${appliedDietary}">
         <input type="text" name="timeOfDay" placeholder="Time of Day" th:value="${appliedTimeOfDay}">
@@ -41,10 +41,22 @@
     </form>
 
     <div style="margin-top: 10px;">
-        <span class="chip" th:if="${appliedCuisine != null and !appliedCuisine.isBlank()}"
-              th:text="${appliedCuisine}"></span>
-        <span class="chip" th:if="${appliedDietary != null and !appliedDietary.isBlank()}"
-              th:text="${appliedDietary}"></span>
+        <span class="chip" th:if="${appliedSearch != null and !appliedSearch.isBlank()}">
+            <span th:text="'&quot;' + ${appliedSearch} + '&quot;'"></span>
+            <a class="chip-remove" th:href="@{/home(cuisine=${appliedCuisine}, dietary=${appliedDietary}, timeOfDay=${appliedTimeOfDay})}">×</a>
+        </span>
+        <span class="chip" th:if="${appliedCuisine != null and !appliedCuisine.isBlank()}">
+            <span th:text="${appliedCuisine}"></span>
+            <a class="chip-remove" th:href="@{/home(search=${appliedSearch}, dietary=${appliedDietary}, timeOfDay=${appliedTimeOfDay})}">×</a>
+        </span>
+        <span class="chip" th:if="${appliedDietary != null and !appliedDietary.isBlank()}">
+            <span th:text="${appliedDietary}"></span>
+            <a class="chip-remove" th:href="@{/home(search=${appliedSearch}, cuisine=${appliedCuisine}, timeOfDay=${appliedTimeOfDay})}">×</a>
+        </span>
+        <span class="chip" th:if="${appliedTimeOfDay != null and !appliedTimeOfDay.isBlank()}">
+            <span th:text="${appliedTimeOfDay}"></span>
+            <a class="chip-remove" th:href="@{/home(search=${appliedSearch}, cuisine=${appliedCuisine}, dietary=${appliedDietary})}">×</a>
+        </span>
     </div>
 </div>
 
@@ -60,7 +72,6 @@
 <section class="groups-section">
     <div class="groups-header">
         <h2>Recurring Get-Together Groups</h2>
-        <a href="#" class="see-all">See all</a>
     </div>
 
     <div class="group-row" th:each="event : ${recurringEvents}">
@@ -74,9 +85,7 @@
                  th:text="|${#temporals.format(event.eventDate, 'd MMM')}, ${#temporals.format(event.eventTime, 'HH:mm')}|"></div>
         </div>
 
-        <form th:action="@{'/events/' + ${event.eventId} + '/join'}" method="post">
-            <button class="join-btn" type="submit">Join Group</button>
-        </form>
+        <a class="join-btn" th:href="@{'/events/' + ${event.eventId}}">Join Group</a>
     </div>
 
     <p th:if="${recurringEvents.isEmpty()}">No recurring groups yet.</p>

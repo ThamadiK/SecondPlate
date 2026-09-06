@@ -34,12 +34,26 @@ h1.page-title {
 }
 
 .chip {
-    display: inline-block;
-    padding: 4px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px 4px 12px;
     border-radius: 20px;
     border: 1px solid #d9a441;
     margin-right: 8px;
     background: #fdf6ee;
+}
+
+.chip-remove {
+    color: #a3512e;
+    text-decoration: none;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 4px;
+}
+
+.chip-remove:hover {
+    color: #6e3720;
 }
 
 .card-grid {
