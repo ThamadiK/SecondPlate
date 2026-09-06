@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="site-header(active)" class="site-header">
+    <a class="brand" href="/">
+        <img th:src="@{/images/logo.png}" alt="">
+        <span class="brand-name"><span class="brand-second">Second</span><span class="brand-plate">Plate</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+        <a th:classappend="${active == 'host'} ? 'active'" href="/host-event">Host an Event</a>
+        <a th:classappend="${active == 'bookings'} ? 'active'" href="#bookings">My Bookings</a>
+        <a th:classappend="${active == 'friends'} ? 'active'" href="#friends">Friends</a>
+    </nav>
+    <label class="search-box">
+        <span class="sr-only">Search</span>
+        <input type="search" placeholder="Search">
+        <span aria-hidden="true">⌕</span>
+    </label>
+    <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
+    <a class="profile" th:href="${loggedInUserId} != null ? @{/logout} : @{/login}"
+       th:aria-label="${loggedInUserId} != null ? 'Log out' : 'Log in'">
+        <img th:src="@{/images/icon.png}" alt="">
+    </a>
+</header>
+</body>
+</html>

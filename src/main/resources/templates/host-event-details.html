@@ -7,24 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/host-event.css}">
 </head>
 <body>
-<header class="site-header">
-    <a class="brand" href="/">
-        <img th:src="@{/images/logo.png}" alt="">
-        <span class="brand-name"><span class="brand-second">Second</span><span class="brand-plate">Plate</span></span>
-    </a>
-    <nav class="main-nav" aria-label="Main navigation">
-        <a class="active" href="/host-event">Host an Event</a>
-        <a href="#bookings">My Bookings</a>
-        <a href="#friends">Friends</a>
-    </nav>
-    <label class="search-box">
-        <span class="sr-only">Search</span>
-        <input type="search" placeholder="Search">
-        <span aria-hidden="true">⌕</span>
-    </label>
-    <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
-    <button class="profile" type="button" aria-label="Open profile"><img th:src="@{/images/icon.png}" alt=""></button>
-</header>
+<div th:replace="~{layout :: site-header('host')}"></div>
 
 <main>
     <section class="page-hero">
@@ -72,7 +55,7 @@
                     <button class="add-tag" type="button">+</button>
                 </div>
             </div>
-            <label>Description <textarea name="description" rows="6" placeholder="Tell people what to expect"></textarea></label>
+            <label>Description <textarea name="description" rows="6" placeholder="Tell people what to expect, including what's on the menu"></textarea></label>
             <label class="cover-label">Add a cover picture <input type="file" name="coverPicture" accept="image/png,image/jpeg"></label>
             <p class="recurring-hint" th:if="${recurring}">This event will repeat with the same group.</p>
         </div>

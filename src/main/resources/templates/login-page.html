@@ -16,8 +16,9 @@
     <section class="auth-form-side">
         <h1>Log In</h1>
         <p class="auth-success" th:if="${param.registered}">Account created log in to continue.</p>
+        <p class="auth-error" th:if="${error}" th:text="${error}">Invalid username/email or password</p>
         <form class="auth-form" th:action="@{/login}" method="post">
-            <input type="text" name="usernameOrEmail" placeholder="Email or username" required autofocus>
+            <input type="text" name="usernameOrEmail" th:value="${usernameOrEmail}" placeholder="Email or username" required autofocus>
             <input type="password" name="password" placeholder="Password" required>
             <button class="auth-submit" type="submit">Continue</button>
         </form>

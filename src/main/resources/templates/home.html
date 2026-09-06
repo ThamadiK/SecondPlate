@@ -30,16 +30,16 @@
 </head>
 <body>
 
-<!-- Nav bar: static markup only - "Search" box has no wired-up functionality yet -->
+<!-- Nav bar: "Search" box has no wired-up functionality yet -->
 <div class="navbar">
     <div class="logo">Second<span>Plate</span></div>
     <div class="links">
-        <a href="#">Host an Event</a>
-        <a href="#">My Bookings</a>
-        <a href="#">Friends</a>
+        <a th:href="@{/host-event}">Host an Event</a>
+        <a href="#bookings">My Bookings</a>
+        <a href="#friends">Friends</a>
         <input class="search" type="text" placeholder="Search" disabled>
         <span>📍 Melbourne</span>
-        <span>👤</span>
+        <a th:href="${loggedInUserId} != null ? @{/logout} : @{/login}">👤</a>
     </div>
 </div>
 

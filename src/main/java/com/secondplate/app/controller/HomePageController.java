@@ -14,6 +14,12 @@ public class HomePageController {
     @Autowired
     private EventService eventService;
 
+    // "/" has no page of its own - it just sends visitors (and post-login redirects) to the home feed
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/home";
+    }
+
     // maps the URL "/homePage" to this method
     @GetMapping("/home")
     public String showHomePage(
