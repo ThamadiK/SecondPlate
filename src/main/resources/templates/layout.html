@@ -9,7 +9,7 @@
     <nav class="main-nav" aria-label="Main navigation">
         <a th:classappend="${active == 'host'} ? 'active'" href="/host-event">Host an Event</a>
         <a th:classappend="${active == 'bookings'} ? 'active'" href="#bookings">My Bookings</a>
-        <a th:classappend="${active == 'friends'} ? 'active'" href="#friends">Friends</a>
+        <a th:classappend="${active == 'friends'} ? 'active'" href="/friends">Friends</a>
     </nav>
     <label class="search-box">
         <span class="sr-only">Search</span>
@@ -17,8 +17,7 @@
         <span aria-hidden="true">⌕</span>
     </label>
     <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
-    <a class="profile" th:href="${loggedInUserId} != null ? @{/logout} : @{/login}"
-       th:aria-label="${loggedInUserId} != null ? 'Log out' : 'Log in'">
+    <a class="profile" href="/profile" aria-label="Open profile">
         <img th:src="@{/images/icon.png}" alt="">
     </a>
 </header>

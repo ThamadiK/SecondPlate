@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends | SecondPlate</title>
+    <link rel="stylesheet" th:href="@{/css/social.css}">
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="/"><img th:src="@{/images/logo.png}" alt="SecondPlate"></a>
+    <nav class="main-nav" aria-label="Main navigation">
+        <a href="/host-event">Host an Event</a>
+        <a href="#bookings">My Bookings</a>
+        <a class="active" href="/friends">Friends</a>
+    </nav>
+    <label class="search-box"><span class="sr-only">Search</span><input type="search" placeholder="Search"><span aria-hidden="true">⌕</span></label>
+    <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
+    <a class="profile-button" href="/profile" aria-label="Open profile"><img th:src="@{/images/icon.png}" alt=""></a>
+</header>
+
+<main class="friends-page">
+    <section class="friends-title"><h1>Friends</h1><button type="button">+ Add Friends</button></section>
+    <section class="messaging-layout">
+        <aside class="friend-list">
+            <a class="friend-row" th:each="friend : ${friends}"
+               th:classappend="${selectedFriend != null and friend.userId == selectedFriend.userId ? 'selected' : ''}"
+               th:href="@{/friends(friendId=${friend.userId})}">
+                <span class="avatar"><img th:src="${friend.profileImageUrl != null ? friend.profileImageUrl : '/images/icon.png'}" alt=""></span>
+                <strong th:text="${friend.fullName}">Friend name</strong>
+            </a>
+            <p class="empty-state" th:if="${#lists.isEmpty(friends)}">There are no other registered users yet.</p>
+        </aside>
+
+        <section class="conversation" th:if="${selectedFriend != null}">
+            <div class="conversation-header"><h2 th:text="${selectedFriend.fullName}">Friend name</h2><span th:text="${'@' + selectedFriend.username}">@username</span></div>
+            <div class="message-list">
+                <div class="message-row" th:each="message : ${messages}"
+                     th:classappend="${message.senderUserId == user.userId ? 'sent' : 'received'}">
+                    <div class="message-bubble" th:text="${message.body}">Message text</div>
+                    <time th:text="${#temporals.format(message.sentAt, 'HH:mm')}">14:30</time>
+                </div>
+                <p class="empty-state" th:if="${#lists.isEmpty(messages)}">Start the conversation.</p>
+            </div>
+            <form class="message-form" action="/friends/messages" method="post">
+                <label class="sr-only" for="message-content">Message</label>
+                <input id="message-content" type="text" name="content" placeholder="Write a message..." autocomplete="off" required>
+                <input type="hidden" name="friendId" th:value="${selectedFriend.userId}">
+                <button type="submit">Send</button>
+            </form>
+        </section>
+        <p class="empty-state conversation-empty" th:if="${selectedFriend == null}">Select a friend to start chatting.</p>
+    </section>
+</main>
+</body>
+</html>

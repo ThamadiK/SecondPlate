@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | SecondPlate</title>
+    <link rel="stylesheet" th:href="@{/css/social.css}">
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="/"><img th:src="@{/images/logo.png}" alt="SecondPlate"></a>
+    <nav class="main-nav" aria-label="Main navigation">
+        <a href="/host-event">Host an Event</a>
+        <a href="#bookings">My Bookings</a>
+        <a href="/friends">Friends</a>
+    </nav>
+    <label class="search-box"><span class="sr-only">Search</span><input type="search" placeholder="Search"><span aria-hidden="true">⌕</span></label>
+    <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
+    <a class="profile-button" href="/profile" aria-label="Open profile"><img th:src="@{/images/icon.png}" alt=""></a>
+</header>
+
+<main class="profile-page">
+    <section class="profile-hero"></section>
+    <section class="profile-card">
+        <div class="avatar large-avatar">
+            <img th:src="${user.profileImageUrl != null ? user.profileImageUrl : '/images/icon.png'}" alt="Profile picture">
+        </div>
+        <h1 th:text="${user.fullName}">Your name</h1>
+        <div class="profile-details">
+            <p>email: <span th:text="${user.email}">your@email.com</span></p>
+            <p>username: <span th:text="${user.username}">username</span></p>
+        </div>
+        <form class="profile-image-form" action="/profile/image" method="post" enctype="multipart/form-data">
+            <label for="profile-image" class="edit-icon">✎</label>
+            <input id="profile-image" type="file" name="image" accept="image/png,image/jpeg" required onchange="this.form.submit()">
+        </form>
+    </section>
+
+    <section class="profile-columns">
+        <article class="profile-panel running-panel">
+            <h2>My hosted get-togethers</h2>
+            <p class="empty-state" th:if="${#lists.isEmpty(hostedEvents)}">You have not hosted any events yet.</p>
+            <div class="running-event" th:each="event : ${hostedEvents}">
+                <span th:text="${event.title}">Event title</span>
+                <span class="event-badge" th:text="${event.recurring ? 'Recurring' : 'One-time'}">One-time</span>
+            </div>
+        </article>
+        <article class="profile-panel certificates-panel">
+            <h2>Certificates</h2>
+            <p>No certificates yet</p>
+        </article>
+    </section>
+</main>
+</body>
+</html>

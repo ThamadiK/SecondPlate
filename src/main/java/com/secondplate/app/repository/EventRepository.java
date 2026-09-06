@@ -8,4 +8,5 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long> {
     // The query is derived automatically
     List<Event> findByRecurring(boolean recurring);
+	List<Event> findByOrganizerId(Long organizerId);
 }

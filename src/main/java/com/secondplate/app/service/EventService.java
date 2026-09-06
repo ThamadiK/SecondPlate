@@ -23,6 +23,10 @@ public class EventService {
         return eventRepository.findById(id).orElse(null);
     }
 
+    public List<Event> getEventsHostedBy(Long organizerId) {
+        return eventRepository.findByOrganizerId(organizerId);
+    }
+
     public Event createEvent(Event event) {
         // Business rules (e.g. "capacity must be > 0") go here later
         return eventRepository.save(event);

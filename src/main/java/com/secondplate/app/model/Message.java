@@ -14,6 +14,7 @@ public class Message {
 
     private Long eventId;      // FK -> Event.eventId
     private Long senderUserId; // FK -> User.userId
+    private Long recipientUserId; // FK -> User.userId
     private String body;
     private LocalDateTime sentAt;
 
@@ -25,6 +26,9 @@ public class Message {
 
     public Long getSenderUserId() { return senderUserId; }
     public void setSenderUserId(Long senderUserId) { this.senderUserId = senderUserId; }
+
+    public Long getRecipientUserId() { return recipientUserId; }
+    public void setRecipientUserId(Long recipientUserId) { this.recipientUserId = recipientUserId; }
 
     public String getBody() { return body; }
     public void setBody(String body) { this.body = body; }

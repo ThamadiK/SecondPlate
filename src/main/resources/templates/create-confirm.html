@@ -15,7 +15,7 @@
     <nav class="main-nav" aria-label="Main navigation">
         <a href="/host-event">Host an Event</a>
         <a href="#bookings">My Bookings</a>
-        <a href="#friends">Friends</a>
+        <a href="/friends">Friends</a>
     </nav>
     <label class="search-box">
         <span class="sr-only">Search</span>
@@ -23,7 +23,7 @@
         <span aria-hidden="true">⌕</span>
     </label>
     <button class="location" type="button"><img th:src="@{/images/location.png}" alt="">Melbourne</button>
-    <button class="profile" type="button" aria-label="Open profile"><img th:src="@{/images/icon.png}" alt=""></button>
+    <a class="profile" href="/profile" aria-label="Open profile"><img th:src="@{/images/icon.png}" alt=""></a>
 </header>
 
 <main>

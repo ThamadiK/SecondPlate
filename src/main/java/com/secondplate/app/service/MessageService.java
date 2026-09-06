@@ -26,4 +26,19 @@ public class MessageService {
         message.setSentAt(LocalDateTime.now());
         return messageRepository.save(message);
     }
+
+    public List<Message> getConversation(Long firstUserId, Long secondUserId) {
+        return messageRepository
+                .findBySenderUserIdAndRecipientUserIdOrSenderUserIdAndRecipientUserIdOrderBySentAtAsc(
+                        firstUserId, secondUserId, secondUserId, firstUserId);
+    }
+
+    public Message sendDirectMessage(Long senderUserId, Long recipientUserId, String body) {
+        Message message = new Message();
+        message.setSenderUserId(senderUserId);
+        message.setRecipientUserId(recipientUserId);
+        message.setBody(body);
+        message.setSentAt(LocalDateTime.now());
+        return messageRepository.save(message);
+    }
 }
