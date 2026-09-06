@@ -27,6 +27,8 @@ public class Event {
     private boolean recurring;
     private String frequency;
     private BigDecimal ticketPrice;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String cuisineType;
     private String dietaryTags;

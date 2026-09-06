@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Book: ' + ${event.title} + ' | SecondPlate'">Book Event | SecondPlate</title>
+    <link rel="stylesheet" th:href="@{/css/events.css}">
+</head>
+<body>
+<div th:replace="~{layout :: site-header('bookings')}"></div>
+
+<main>
+    <section class="event-hero">
+        <h1 th:text="${event.title}">Event Title</h1>
+        <p th:text="'Hosted by ' + ${organizerName}">Hosted by</p>
+    </section>
+
+    <section class="booking-form-section">
+        <form class="booking-form" th:action="@{/events/{id}/book(id=${event.eventId})}" method="post">
+            <div class="form-row">
+                <label>Email
+                    <input type="email" name="email" required>
+                </label>
+                <label>Phone Number
+                    <input type="tel" name="phoneNumber">
+                </label>
+            </div>
+
+            <h2 class="section-title">Personal Details</h2>
+            <div class="form-row">
+                <label>First Name
+                    <input type="text" name="firstName" required>
+                </label>
+                <label>Last Name
+                    <input type="text" name="lastName" required>
+                </label>
+            </div>
+
+            <h2 class="section-title">Payment Details</h2>
+            <div class="form-row">
+                <label>Card Number
+                    <input type="text" name="cardNumber" autocomplete="cc-number" required>
+                </label>
+                <label>Expiry date
+                    <input type="text" name="cardExpiry" placeholder="MM/YY" autocomplete="cc-exp">
+                </label>
+                <label>CVC
+                    <input type="text" name="cvc" maxlength="4" autocomplete="cc-csc">
+                </label>
+            </div>
+
+            <label>Dietary Requirement(s)
+                <input type="text" name="dietaryRequirements">
+            </label>
+
+            <div class="booking-summary">
+                <button class="save-button" type="submit">Save your seat</button>
+                <p class="price" th:text="'$' + ${event.ticketPrice}">$0.00</p>
+                <p class="event-datetime" th:text="${#temporals.format(event.eventDate, 'EEE, d MMMM yyyy')} + ' - ' + ${#temporals.format(event.eventTime, 'h:mm a')}"></p>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,56 @@
+@import url('host-event.css');
+
+.event-hero { padding: 42px 20px 39px; background: #ee9676; color: #fff; text-align: center; }
+.event-hero h1 { margin: 0 0 8px; font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 500; letter-spacing: -.045em; }
+.event-hero p { margin: 0; font-size: 1.05rem; font-weight: 500; }
+.event-hero .next-event { margin-top: 4px; }
+
+.event-body { max-width: 1040px; margin: auto; padding: 40px 30px 60px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 44px; }
+.details-column h2, .side-column h2 { margin: 22px 0 8px; font-size: 1.15rem; }
+.details-column h2:first-child { margin-top: 0; }
+.details-column p { margin: 0 0 4px; font-size: .95rem; }
+.details-column .about-text { white-space: pre-line; }
+
+.location-map img { width: 100%; max-width: 260px; border-radius: 10px; display: block; }
+.no-tags, .no-attendees, .no-messages { color: #6b5f58; font-size: .88rem; }
+
+.price-block { margin-top: 26px; }
+.price-block .price { margin: 0; font-size: 1.05rem; font-weight: 600; }
+.price-block .event-datetime { margin: 2px 0 12px; color: #6b5f58; font-size: .82rem; }
+.save-button, .join-button { display: inline-block; padding: 12px 24px; border: 0; border-radius: 5px; background: #edab45; color: #211a17; font-size: 1rem; font-weight: 500; text-decoration: none; cursor: pointer; }
+
+/* Recurring: attendee list + chat */
+.event-body.recurring { grid-template-columns: 260px 1fr; align-items: start; }
+.attendee-column { border: 1px solid #e2cdb9; border-radius: 10px; padding: 18px; display: grid; gap: 14px; }
+.attendee-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.attendee-list li { display: flex; align-items: center; gap: 10px; font-size: .95rem; }
+.attendee-list img { width: 22px; height: 22px; border-radius: 50%; background: #f8eadc; padding: 3px; }
+.attendee-list .check { margin-left: auto; color: #211a17; }
+.already-joined { margin: 0; font-weight: 500; color: #a65335; }
+
+.chat-panel { border: 1px solid #e2cdb9; border-radius: 10px; padding: 20px; display: grid; grid-template-rows: 1fr auto; gap: 16px; min-height: 420px; }
+.chat-messages { display: grid; gap: 14px; align-content: start; }
+.message { display: grid; gap: 4px; max-width: 70%; }
+.message .sender { margin: 0; font-size: .82rem; font-weight: 600; }
+.message .bubble { margin: 0; padding: 10px 14px; border-radius: 12px; background: #fff; border: 1px solid #e2cdb9; font-size: .9rem; }
+.message .time { font-size: .72rem; color: #6b5f58; }
+.message.theirs { justify-self: start; }
+.message.mine { justify-self: end; text-align: right; }
+.message.mine .bubble { background: #bff3c6; border-color: #9fdca9; }
+.chat-input { display: flex; gap: 10px; }
+.chat-input input { flex: 1; padding: 11px 13px; border: 1px solid #84756d; border-radius: 24px; outline: 0; background: #f8eadc; }
+.chat-input button { padding: 0 20px; border: 0; border-radius: 24px; background: #edab45; color: #211a17; font-weight: 500; cursor: pointer; }
+
+/* Booking form page */
+.booking-form-section { max-width: 820px; margin: auto; padding: 40px 30px 60px; }
+.booking-form { display: grid; gap: 18px; }
+.booking-form .section-title { margin: 10px 0 0; font-size: 1.1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-row label, .booking-form > label { display: grid; gap: 6px; font-size: 1rem; font-weight: 500; }
+.form-row input, .booking-form input { width: 100%; padding: 11px 13px; border: 1px solid #84756d; border-radius: 7px; outline: 0; background: #f8eadc; font-size: .95rem; }
+.booking-summary { margin-top: 10px; display: grid; justify-items: start; gap: 4px; }
+
+@media (max-width: 760px) {
+    .event-body, .event-body.recurring { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+}
